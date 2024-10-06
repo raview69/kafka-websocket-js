@@ -15,5 +15,5 @@ const init = async () => {
 
 app.listen(PORT, async () => {
   console.log(`Listiening to port ----> ${PORT}`);
-  init();
+  init(50);
 });

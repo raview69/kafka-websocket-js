@@ -1,4 +1,5 @@
 "use client";
+
 import { AreaLineChartCanvas } from "@/components/AreaLineChartCanvas";
 import { useWs } from "@/utils/hooks/useWs";
 import { useEffect, useState } from "react";
@@ -12,8 +13,10 @@ export default function Home() {
   useEffect(() => {
     if (isWs1Ready) {
       console.log("client 1 connected");
+      console.log(ws1Value);
       if (ws1Value) {
         const { name, value } = JSON.parse(ws1Value);
+        console.log(name, value);
         setWs1Data((prev) => [...prev, { name, value: parseInt(value) }]);
       }
     }
