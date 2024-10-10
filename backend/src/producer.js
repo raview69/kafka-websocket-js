@@ -1,39 +1,23 @@
-import { Partitioners } from "kafkajs";
-import kafkaClient from "./service/kafkaclient.js";
-import readline from "readline";
-import { stdin as input, stdout as output } from "node:process";
+import kafka from "./service/config.js";
 
-const rl = readline.createInterface({
-  input: input,
-  output: output,
-});
+class KafkaProducer {
+  constructor() {
+    this.producer = kafka.producer();
+  }
 
-const producerRun = async () => {
-  const producer = kafkaClient.producer({
-    createPartitioner: Partitioners.LegacyPartitioner,
-  });
+  async produce(topic, messages) {
+    try {
+      await this.producer.connect();
+      await this.producer.send({
+        topic: topic,
+        messages: messages,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await this.producer.disconnect();
+    }
+  }
+}
 
-  await producer.connect();
-
-  rl.setPrompt("Enter Prompt --> ");
-  rl.prompt();
-
-  rl.on("line", async (line) => {
-    const [name, value, partition] = line.split(" ");
-
-    await producer.send({
-      topic: "thabishs-topic",
-
-      messages: [
-        {
-          partition: parseInt(partition),
-          value: JSON.stringify({ name, value }),
-        },
-      ],
-    });
-  }).on("close", async () => {
-    await producer.disconnect();
-  });
-};
-
-producerRun();
+export default KafkaProducer;

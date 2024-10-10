@@ -1,4 +1,4 @@
-import kafkaClient from "./service/kafkaclient.js";
+import kafkaClient from "./service/config.js";
 
 const consumerRun = async (groupId, topics, wss) => {
   const consumer = kafkaClient.consumer({ groupId: groupId });

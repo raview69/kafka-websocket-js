@@ -1,4 +1,4 @@
-import kafkaClient from "./service/kafkaclient.js";
+import kafkaClient from "./service/config.js";
 
 const adminInit = async () => {
   console.log("Admin INTIATED");

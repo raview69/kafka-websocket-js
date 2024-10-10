@@ -15,9 +15,21 @@ export default function Home() {
       console.log("client 1 connected");
       console.log(ws1Value);
       if (ws1Value) {
-        const { name, value } = JSON.parse(ws1Value);
-        console.log(name, value);
-        setWs1Data((prev) => [...prev, { name, value: parseInt(value) }]);
+        // const { name, value } = JSON.parse(ws1Value);
+        // console.log(name, value);
+        // const valueJson = ws1Value?.map((data, index) => {
+        //   console.log(data);
+        // });
+        console.log(ws1Value);
+        console.log(ws1Value?.slice(0, 1));
+        console.log(ws1Value?.slice(2, 4));
+        setWs1Data((prev) => [
+          ...prev,
+          {
+            name: ws1Value?.slice(0, 1),
+            value: parseInt(ws1Value?.slice(2, 4)),
+          },
+        ]);
       }
     }
   }, [isWs1Ready, ws1Value]);
